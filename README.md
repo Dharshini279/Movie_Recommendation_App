@@ -17,7 +17,6 @@ movie-recommendation-app/
 │   ├── app.py               # Streamlit frontend
 │   ├── model_backend.py     # Backend model and recommendation logic
 │   ├── vec.pkl              # Trained CountVectorizer
-│   ├── sim.pkl              # Cosine similarity matrix
 │   └── movies.pkl           # Final cleaned movie data
 │
 ├── dataset/                 # Raw data files
