@@ -52,7 +52,7 @@ movie-recommendation-app/
 - Vectorized using **CountVectorizer**
 - Similarity is calculated using **cosine similarity**
 - Final data and models are stored in `vec.pkl`, `sim.pkl`, and `movies.pkl`
-- All preprocessing and model training was done in the `model.ipynb` notebook
+- All preprocessing and model training was done in the `Movie_Recommendation_System.ipynb` notebook
 
 ## How Recommendations Are Generated
 
