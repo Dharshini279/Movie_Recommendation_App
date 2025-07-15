@@ -1,124 +1,118 @@
 # Movie Recommendation System
 
-This is a simple and interactive movie recommendation app built using **Streamlit**. It suggests movies that are similar to the one you pick, based on their descriptions, genres, cast, and other details — all powered by machine learning and natural language processing techniques.
+This is a hybrid movie recommendation system built using **collaborative filtering** and **content-based filtering** techniques. The app is designed to suggest personalized movie recommendations based on user interactions and movie metadata — all wrapped in a simple and clean interface using **Streamlit**.
+
+---
 
 ## Why I Built This
 
-I wanted to build a movie recommendation system that works purely by analyzing the content of movies — like their overviews, genres, and cast — without relying on user ratings or watch history. This project gave me hands-on experience with data preprocessing, vectorization, and deploying a recommendation model in a user-friendly app.
+I wanted to go beyond just content-based or rating-based systems. So I built a **hybrid system** that:
+- Uses **ALS collaborative filtering** to recommend movies to users based on past interactions.
+- Uses **cosine similarity** to suggest similar movies based on genres, keywords, and metadata.
+This helped me gain hands-on experience in preprocessing, matrix factorization, building similarity models, and deploying them in a practical, user-friendly way.
+
+---
 
 ## Project Structure
-
-Here’s how I’ve organized everything:
-
-```
-movie-recommendation-app/
+movie-recommendation-system/
 │
-├── app/                     # Main app logic
-│   ├── app.py               # Streamlit frontend
-│   ├── model_backend.py     # Backend model and recommendation logic
-│   ├── vec.pkl              # Trained CountVectorizer
-│   └── movies.pkl           # Final cleaned movie data
+├── app/ # App logic and frontend
+│ └── app.py # Main Streamlit app file
 │
-├── dataset/                 # Raw data files
-│   ├── credits.csv
-│   └── movies.csv
+├── model/ # Jupyter Notebook for building the model
+│ └── Movie_Recommendation_Model.ipynb
 │
-├── model/                   # Notebook for model development
-│   └── Movie_Recommendation_Model.ipynb
+├── datasets/ # Raw data files
+│ ├── movies.csv
+│ └── ratings.csv
 │
-└── README.md                # You're here :)
-```
+├── README.md # You're here :)
 
-## About the Dataset
+ **Model Files** are stored in a shared folder:  
+ [Click here to access trained model files](https://drive.google.com/drive/folders/1Eb3uHxDvlCWNAYjG5pvbmcJ9KqzGAR2a?usp=drive_link)
 
-- **Source**: [TMDB 5000 Movie Dataset – Kaggle](https://www.kaggle.com/datasets/tmdb/tmdb-movie-metadata)
+These include:
+- `als_model.pkl`  
+- `cosine_sim.pkl`  
+- `interaction_matrix.npz`  
+- `new.pkl`  
+- `user_map.pkl`
+
+---
+
+## Dataset Used
+
+- **Source**: [TMDB + User Ratings dataset]
 - **Files Used**:
-  - `movies.csv`: Info about movies like title, overview, genres, etc.
-  - `credits.csv`: Info about cast and crew
+  - `movies.csv`: Contains movie metadata like title and genres.
+  - `ratings.csv`: Contains user ratings of movies.
 
-### What I Did with the Data:
+### Data Processing Steps:
+- Merged and cleaned datasets
+- Mapped internal user and movie IDs
+- Created a **user-item interaction matrix**
+- Created a **combined "tags" column** from genres and metadata
+- Preprocessed text for content filtering
+- Calculated **cosine similarity matrix**
 
-- Merged both files using movie IDs
-- Selected columns like overview, cast, crew, and genres
-- Combined everything into a single `tags` column
-- Cleaned the text, removed stopwords, and applied stemming
-- Used `CountVectorizer` to turn text into vectors (limited to top 5000 words)
-- Calculated similarity between movies using **cosine similarity**
+---
 
 ## How the Model Works
 
-- It’s a **content-based filtering** system
-- NLP techniques used: tokenization and stemming
-- Vectorized using **CountVectorizer**
-- Similarity is calculated using **cosine similarity**
-- Final data and models are stored in `vec.pkl`, `sim.pkl`, and `movies.pkl`
-- All preprocessing and model training was done in the `Movie_Recommendation_System.ipynb` notebook
+The `Movie_Recommendation_Model.ipynb` file handles everything from preprocessing to model building.
 
-## How Recommendations Are Generated
+### 1. **Collaborative Filtering**
+- Built using the **ALS (Alternating Least Squares)** algorithm
+- Uses user-item interaction data
+- Recommends movies for each user based on hidden preferences
 
-The file `model_backend.py` takes care of:
+### 2. **Content-Based Filtering**
+- Processes text data from movie overviews, genres, and keywords
+- Converts text into vectors using `CountVectorizer`
+- Calculates similarity between movies using **cosine similarity**
+- Recommends movies similar to a given movie
 
-- Loading the vectorizer and similarity matrix
-- Searching for the selected movie
-- Returning the top 5 most similar movies based on cosine similarity
+### 3. **Hybrid Recommendation Strategy**
+- If the user is known: show ALS-based personalized recommendations
+- If new or no history: fallback to content-based filtering
 
-## The Streamlit App
+---
 
-- `app.py` is the main file to run the app
-- It lets users search or pick a movie title
-- When a movie is selected, it shows a list of recommended movies instantly
+## Backend Logic (`app.py`)
 
-## Getting Started
+- Loads model files from the shared model folder
+- Accepts user input (user ID or movie name)
+- Shows top 5 recommendations using hybrid logic
+- Handles both logged-in and anonymous user flows
 
-### Step 1: Move to the project folder
+---
+## Example
 
-```bash
-cd movie-recommendation-app
-```
+If the user enters their user ID (e.g. `User 50`), the app recommends:
 
-### Step 2: Install the required packages (if not already)
+- The Matrix  
+- Inception  
+- The Dark Knight  
+- Interstellar  
+- Fight Club
 
-```bash
-pip install streamlit pandas scikit-learn nltk
-```
+If the user types **"Iron Man"**, the content-based filter suggests:
 
-### Step 3: Run the app
+- Iron Man 2  
+- Avengers  
+- Captain America  
+- Thor  
+- Guardians of the Galaxy
 
-```bash
-streamlit run app/app.py
-```
-
-## Example Output
-
-If the user selects **"Inception"**, the app might recommend:
-
-1. Interstellar  
-2. The Prestige  
-3. The Matrix  
-4. Shutter Island  
-5. Tenet  
-
-These are based purely on the metadata, not on user preferences or ratings.
+---
 
 ## Tech Stack
 
 - Python  
-- Streamlit  
-- Pandas  
+- Pandas & NumPy  
 - Scikit-learn  
-- NLTK  
-- CountVectorizer + Cosine Similarity
+- Streamlit  
+- Matrix factorization (**ALS model via `implicit`**)  
+- Cosine similarity  
+- CountVectorizer (for content vectorization)
 
-## Screenshots
-
-![image](https://github.com/user-attachments/assets/701f098e-debc-487d-9e3f-16e671064b11)
-
-## What I’d Like to Add Next
-
-- Show movie posters using the TMDB API  
-- Display ratings and short descriptions  
-- Use collaborative filtering for better recommendations  
-- Improve the design with better visuals  
-- Deploy the app online using Streamlit Cloud or Render
-
-Thanks for checking out my project! Feel free to explore or suggest improvements :)
