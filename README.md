@@ -64,11 +64,11 @@ The `Movie_Recommendation_Model.ipynb` file handles everything from preprocessin
 
 If the user enters their user ID (e.g. `User 50`), the app recommends:
 
-> The Matrix  Inception  The Dark Knight  Interstellar  Fight Club
+> The Matrix, Inception, The Dark Knight, Interstellar, Fight Club
 
 If the user types **"Iron Man"**, the content-based filter suggests:
 
-> Iron Man 2  Avengers  Captain America  Thor  Guardians of the Galaxy
+> Iron Man 2, Avengers, Captain America, Thor, Guardians of the Galaxy
 
 ## Tech Stack
 
