@@ -14,7 +14,7 @@ This helped me gain hands-on experience in preprocessing, matrix factorization, 
 ---
 
 ## Project Structure
-movie-recommendation-system/
+`movie-recommendation-system/
 │
 ├── app/                         # App logic and frontend
 │   └── app.py                   # Main Streamlit app file
@@ -26,7 +26,7 @@ movie-recommendation-system/
 │   ├── movies.csv
 │   └── ratings.csv
 │
-└── README.md                    # You're here :)
+└── README.md                    # You're here :)`
 
  **Model Files** are stored in a shared folder:  
  [Click here to access trained model files](https://drive.google.com/drive/folders/1Eb3uHxDvlCWNAYjG5pvbmcJ9KqzGAR2a?usp=drive_link)
